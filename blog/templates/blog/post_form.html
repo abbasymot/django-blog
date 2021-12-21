@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+
+{% block title %}Blog{% endblock title %}
+
+{% block content %}
+    <br><br>
+    <form action="" method="post">
+        {% csrf_token %}
+        <h3>Create a new post.</h3>
+
+        {{form.as_p}}
+
+        <input class="btn btn-success" type="submit" value="Save">
+        <a class="btn btn-primary mx-5" href="{% url 'profile' request.user.id %}">Back</a>
+        <br><br>
+
+    </form>
+{% endblock content %}

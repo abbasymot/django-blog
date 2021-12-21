@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+
+{% block title %}Posts{% endblock title %}
+
+{% block content %}
+    <br><br>
+    <form action="{% url 'search' %}" method="GET" class="form row">
+        <div class="col-sm-11">
+            <input name="q" type="text" class="form-control" placeholder="Search...">
+        </div>
+        <div class="col-sm-1 mx-auto">
+            <input type="submit" value="Search" class="btn  btn-outline-dark">
+        </div>
+    </form>
+
+    <br>
+
+    <div class="row">
+        {% for post in posts %}
+            <div class="col-md-4">
+                <div class="card" style="width: 25rem; height: 34rem;">
+                    <a href="{% url 'post' post.slug %}">
+                        <img class="post-thumbnail card-img-top" src="{{post.thumbnail.url}}" alt="{{post.title}}" 
+                        style="width: 24.9rem; height: 18rem;">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{% url 'post' post.slug %}">{{post.title}}</a></h5>
+                        <p class="post-updated">Last update at {{post.updated|date:"Y/M/d"}}</p>
+                        <p>Post by <a href="">{{post.author}}</a></p>
+                        {% if post.description %}
+                        <p class="card-text">{{post.description|slice:"80"}}...</p>
+                        {% else %}
+                        <p class="card-text">{{post.body|slice:"80"}}...</p>
+                        {% endif %}
+                        <a href="{% url 'post' post.slug %}" class="btn btn-primary" style="position: absolute; bottom: 0.5rem;">Read</a>
+                    </div>
+                    </div>
+                <br>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

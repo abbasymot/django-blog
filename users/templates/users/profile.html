@@ -1,0 +1,53 @@
+{% extends 'main.html' %}
+
+{% block title %}{{profile}}{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <br><br><br><br>
+            <!-- Posts -->
+            {% for post in posts %}
+                <div class="card" style="width: 25rem; height: 34rem;">
+                    <a href="{% url 'post' post.slug %}">
+                        <img class="post-thumbnail card-img-top" src="{{post.thumbnail.url}}" alt="{{post.title}}" 
+                        style="width: 24.9rem; height: 18rem;">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{% url 'post' post.slug %}">{{post.title}}</a></h5>
+                        <p class="post-updated">Last update at {{post.updated|date:"Y/M/d"}}</p>
+                        <p>Post by <a href="">{{post.author|title}}</a></p>
+                        {% if post.description %}
+                        <p class="card-text">{{post.description|slice:"80"}}...</p>
+                        {% else %}
+                        <p class="card-text">{{post.body|slice:"80"}}...</p>
+                        {% endif %}
+                        <a href="{% url 'post' post.slug %}" class="btn btn-secondary">Read</a>
+                        <a href="{% url 'update' post.slug %}" class="btn btn-primary" >Update</a>
+                        <a href="{% url 'delete' post.slug %}" class="btn btn-danger" >Delete</a>
+                    </div>
+                </div>
+                <br>
+            {% endfor  %}
+        </div>
+
+        <!-- Side bar -->
+        <div class="col-md-4">
+            <img src="{{profile.avatar.url}}" alt="{{profile}}" style="border-radius: 50%; width: 30rem;">
+            <h1 style="display: inline;">{{profile}} 
+                <a class="btn btn-primary" href="{% url 'create' %}">+New Post</a>
+            </h1>
+            <p>{{profile.about|safe|linebreaks}}</p>
+            <ul>
+                <li>Instagram: {{profile.instagram}}</li>
+                <li>Twitter: {{profile.twitter}}</li>
+                <li>Linkedin: {{profile.linkedin}}</li>
+                <li>Website: {{profile.website}}</li>
+                <li>Location: {{profile.location}}</li>
+            </ul>
+            <p>Last updated at {{profile.updated|date:"Y/m/d H:i A"}} 
+                <a class="btn btn-sm btn-primary" href="{% url 'update_profile' profile.slug %}">Edit Profile</a>
+            </p>
+        </div>        
+    </div>
+{% endblock content %}

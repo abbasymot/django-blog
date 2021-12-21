@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% block title %}Delete "{{post.title}}"{% endblock title %}
+
+{% block content %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <br>
+        <br>
+        <h3>Are you sure to delete "{{post.title}}"?</h3>
+        <ul>
+            <li><strong>Title:</strong> {{post.title}}</li>
+            <li><strong>Author:</strong> {{post.author}}</li>
+            <li><strong>Body:</strong> {{post.body|slice:"80"}}...</li>
+        </ul>
+        <br>
+        <button class="btn btn-danger" type="submit">Yes</button>
+        <a class="btn-primary btn mx-5" href="{% url 'profile' request.user.id %}">No</a>
+
+    </form>
+{% endblock content %}

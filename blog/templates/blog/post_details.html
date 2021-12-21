@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+
+{% block title %}{{post.title}}{% endblock title %}
+
+{% block content %}
+    <br><br>
+    <img class="details-thumbnail" src="{{post.thumbnail.url}}" alt="{{post.title}}" 
+        style="width: 24.9rem; height: 18rem; margin: auto;">
+    <br><br>
+    <h1>{{post.title}}</h1>
+    <h5>By {{post.author}}</h5>
+    <p class="post-updated">Last update at {{post.updated|date:"Y/M/d"}}</p>
+    <p>{{post.description|safe|linebreaks}}</p>
+    <br>
+    <p>{{post.body|safe|linebreaks}}</p>
+    {% if post.category %}
+        <a href=""><strong>{{post.category}}</strong></a>
+        
+    {% endif %}
+
+    {% if post.tag %}
+        {% for tag in post.tag.all %}
+            <a href="">{{tag|join:", "}}</a>
+        {% endfor %}
+    {% endif %}
+    
+    <br><br>
+    <a href="{% url 'posts' %}">Back to list</a>
+    <hr>
+{% endblock content %}
