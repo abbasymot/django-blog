@@ -1,12 +1,12 @@
 from django.http import request
-from django.shortcuts import render, redirect
+from django.shortcuts import get_list_or_404, get_object_or_404, render, redirect
 from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.db.models import Q
 
-from .models import Post
+from .models import Comment, Post
 from users.models import Profile
 from .forms import PostForm
 
@@ -21,13 +21,14 @@ class PostListView(ListView):
     template_name ='blog/post_list.html'
 
 
-class PostDetailView(DetailView):
+def post_details(request, slug):
     """
     Return Single post details
     """
-    model = Post
-    context_object_name = "post"
-    template_name = 'blog/post_details.html'
+    post = get_object_or_404(Post, slug=slug)
+    comments = get_list_or_404(Comment, post=post)
+    context = {"post": post,"comments": comments}
+    return render(request, 'blog/post_details.html', context)
 
 
 def post_create(request):
