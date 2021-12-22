@@ -23,7 +23,37 @@
             <a href="">{{tag|join:", "}}</a>
         {% endfor %}
     {% endif %}
-
+    <br><br>
+    <hr>
+    {% if comments %}
+    <h4>Comments</h4>
+        {% for comment in comments %}
+        <div class="container">
+            <div class="row">
+                <div class="col-8 ">
+                    <div class="card card-white post">
+                        <div class="post-heading ">
+                            <div class="float-left image">
+                                <img src="{{comment.profile.avatar.url}}" class="img-circle avatar" alt="{{comment.profile}}"
+                                    style="width: 5rem;">
+                            </div>
+                            <div class="float-left meta">
+                                <div class="title h5">
+                                    <a href="#"><b>{{comment.profile}}</b></a>
+                                </div>
+                                <h6 class="text-muted time">{{comment.created|date:"Y/M/dd"}}</h6>
+                            </div>
+                        </div> 
+                        <div class="post-description"> 
+                            <p class="mx-5">{{comment.body}}</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
     
     <br><br>
     <a href="{% url 'posts' %}">Back to list</a>
