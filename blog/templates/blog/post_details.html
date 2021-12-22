@@ -25,6 +25,16 @@
     {% endif %}
     <br><br>
     <hr>
+    {% if request.user.is_authenticated %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <h4>Send Comment.</h4>
+            <textarea class="form-control" type="text" placeholder="Your Comment"></textarea>
+            <input class="btn btn-success" type="submit" name="" id="" value="Send">
+        </form>
+        <br>
+    {% endif %}
+
     {% if comments %}
     <h4>Comments</h4>
         {% for comment in comments %}
