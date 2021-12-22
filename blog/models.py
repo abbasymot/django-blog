@@ -60,4 +60,4 @@ class Comment(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title
+        return f"{str(self.profile)} - {str(self.post)}"
