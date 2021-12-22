@@ -26,8 +26,8 @@ def post_details(request, slug):
     Return Single post details
     """
     post = get_object_or_404(Post, slug=slug)
-    comments = get_list_or_404(Comment, post=post)
-    context = {"post": post,"comments": comments}
+    post_comments = Comment.objects.filter(post=post)
+    context = {"post": post, "comments": post_comments}
     return render(request, 'blog/post_details.html', context)
 
 
