@@ -21,12 +21,12 @@ class PostListView(ListView):
     template_name ='blog/post_list.html'
 
     def get_queryset(self):
-        qs = Post.objects.all()
-        if self.kwargs.get('slug'):
-            category_slug = self.kwargs.get('slug')
-            category = Category.objects.get(slug = category_slug)
-            category_id = Category.objects.get(id = category.id)
-            qs = Post.objects.filter(category = category_id)
+        qs = Post.objects.all() # All of the posts
+        if self.kwargs.get('slug'): # If request has a category slug
+            category_slug = self.kwargs.get('slug') # get the category slug
+            category = Category.objects.get(slug = category_slug) # find the category bu slug
+            category_id = Category.objects.get(id = category.id) # find the category id for filtering posts
+            qs = Post.objects.filter(category = category_id) # filter post that related to the category
         return qs
 
 def post_details(request, slug):
@@ -100,7 +100,6 @@ class SearchListView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get("q")
-        print(query)
         return Post.objects.filter(
             Q(title__icontains=query) | Q(description__icontains=query)
             | Q(body__icontains=query)
