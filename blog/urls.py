@@ -8,7 +8,7 @@ urlpatterns = [
     path('category/<slug:slug>/', PostListView.as_view(), name='categoryposts'), # all of the posts
     path('post/<slug:slug>/update/', post_update, name='update'), # update a post
     path('post/<slug:slug>/delete/', post_delete, name='delete'), # delete a post
-    path('post/create/', post_create, name='create'), # decreate a post
+    path('create/', post_create, name='create'), # create a post
 
     path('search/', SearchListView.as_view(), name='search'),
 

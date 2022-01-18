@@ -21,12 +21,12 @@ class PostListView(ListView):
     template_name ='blog/post_list.html'
 
     def get_queryset(self):
-        qs = Post.objects.all() # All of the posts
+        qs = Post.objects.all().order_by('-created') # All of the posts
         if self.kwargs.get('slug'): # If request has a category slug
             category_slug = self.kwargs.get('slug') # get the category slug
             category = Category.objects.get(slug = category_slug) # find the category bu slug
             category_id = Category.objects.get(id = category.id) # find the category id for filtering posts
-            qs = Post.objects.filter(category = category_id) # filter post that related to the category
+            qs = Post.objects.filter(category = category_id).order_by('-created') # filter post that related to the category
         return qs
 
 def post_details(request, slug):
