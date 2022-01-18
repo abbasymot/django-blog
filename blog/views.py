@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.db.models import Q
 
-from .models import Comment, Post
+from .models import Comment, Post, Category
 from users.models import Profile
 from .forms import PostForm
 
@@ -20,6 +20,14 @@ class PostListView(ListView):
     context_object_name = 'posts'
     template_name ='blog/post_list.html'
 
+    def get_queryset(self):
+        qs = Post.objects.all()
+        if self.kwargs.get('slug'):
+            category_slug = self.kwargs.get('slug')
+            category = Category.objects.get(slug = category_slug)
+            category_id = Category.objects.get(id = category.id)
+            qs = Post.objects.filter(category = category_id)
+        return qs
 
 def post_details(request, slug):
     """
@@ -97,5 +105,3 @@ class SearchListView(ListView):
             Q(title__icontains=query) | Q(description__icontains=query)
             | Q(body__icontains=query)
         )
-
-    

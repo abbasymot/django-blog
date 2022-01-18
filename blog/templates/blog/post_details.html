@@ -14,7 +14,7 @@
     <br>
     <p>{{post.body|safe|linebreaks}}</p>
     {% if post.category %}
-        <a href=""><strong>{{post.category}}</strong></a>
+        <a href="{% url 'categoryposts' post.category.slug %}"><strong>{{post.category}}</strong></a>
         
     {% endif %}
 
