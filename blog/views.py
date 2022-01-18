@@ -79,15 +79,16 @@ def  post_update(request, slug):
     return render(request, 'blog/post_form.html',context)
                 
         
-class PostDeleteView(LoginRequiredMixin, DeleteView):
-    """
-    Delete a post
-    """
-    model = Post
-    context_object_name = 'post'
-    template_name = 'blog/post_delete.html'
-    success_url = reverse_lazy("posts")
-
+def post_delete(request, slug):
+    profile = Profile.objects.get(user = request.user)
+    post = get_object_or_404(Post, slug=slug)
+    if post.author != profile:
+        return redirect("posts")
+    if request.method == 'POST':
+        post.delete()
+        return redirect("posts")
+    context = {'post': post, 'profile': profile.slug}
+    return render(request, "blog/post_delete.html", context)
 
 class SearchListView(ListView):
     """
